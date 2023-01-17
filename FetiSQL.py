@@ -24,9 +24,12 @@ if(args.dork):
     colorprint.colorprint("Dorks Scanning...")
     UrlList = DorkScanner.SearchMain(DorkPath,thread_count)
     colorprint.colorprint("Dork Scanning Proccess Completed.")
-    colorprint.colorprint("SQL Scanning...")
-    results = SQLVulnDetector.VulnMain(UrlList,thread_count)
-    colorprint.colorprint("SQL Scanning Proccess Completed.")
+    if(args.vuln):
+        colorprint.colorprint("SQL Scanning...")
+        results = SQLVulnDetector.VulnMain(UrlList,thread_count)
+        colorprint.colorprint("SQL Scanning Proccess Completed.")
+    else:
+        results = UrlList
     if output_path:
         if output_path.count('/') > 0:
             with open(output_path, "w") as file:
