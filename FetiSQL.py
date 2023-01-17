@@ -6,7 +6,7 @@ from datetime import datetime
 import time
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dork", help="Dork file")
-parser.add_argument("-e", "--engine",default="searchencrypt", help="Dork engine neeva,ask,searchencrypt, default:searchencrypt")
+parser.add_argument("-e", "--engine",default="neeva", help="Dork engine neeva,ask,searchencrypt, default:neeva")
 parser.add_argument("-v","--vuln", help="Just Vulnerability websites", action="store_true")
 parser.add_argument("-t", "--thread",help="Thread count")
 parser.add_argument("-o", "--output",help="Output directory")
