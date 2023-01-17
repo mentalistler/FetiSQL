@@ -50,7 +50,7 @@ def VulnCheck(url):
             query = parsed_url.query.replace('=', "='")
             new_url = urlunsplit((parsed_url.scheme, parsed_url.netloc, parsed_url.path, query, parsed_url.fragment))
         user_agent = {'User-agent': useragent.get_useragent()}
-        response = requests.get(new_url,headers=user_agent,timeout=30)
+        response = requests.get(new_url,headers=user_agent,timeout=15)
         vulner = vulndetector()
         isVulnerable = vulner.content_check(response.text)
         if(isVulnerable[0]):
