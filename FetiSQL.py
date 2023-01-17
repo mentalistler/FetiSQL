@@ -6,6 +6,7 @@ from datetime import datetime
 import time
 parser = argparse.ArgumentParser()
 parser.add_argument("-d", "--dork", help="Dork file")
+parser.add_argument("-e", "--engine",default="searchencrypt", help="Dork engine neeva,ask,searchencrypt, default:searchencrypt")
 parser.add_argument("-v","--vuln", help="Just Vulnerability websites", action="store_true")
 parser.add_argument("-t", "--thread",help="Thread count")
 parser.add_argument("-o", "--output",help="Output directory")
@@ -21,8 +22,10 @@ else:
 
 if(args.dork):
     DorkPath = args.dork
+    engine = args.engine
+    print(engine)
     colorprint.colorprint("Dorks Scanning...")
-    UrlList = DorkScanner.SearchMain(DorkPath,thread_count)
+    UrlList = DorkScanner.SearchMain(DorkPath,thread_count,engine)
     colorprint.colorprint("Dork Scanning Proccess Completed.")
     if(args.vuln):
         colorprint.colorprint("SQL Scanning...")
