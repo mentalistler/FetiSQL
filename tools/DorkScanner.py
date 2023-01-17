@@ -51,4 +51,4 @@ def SearchMain(dork,thread):
             t.join()
         i += thread
         threads = []
-        return results
+    return results
