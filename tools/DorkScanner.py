@@ -3,12 +3,13 @@ from tools import colorprint
 import requests
 import re
 import threading
+from tqdm import tqdm
 results = []
-def search_duckduckgo(query):
+def search_duckduckgo(query,visual):
     try:
         global results
         user_agent = {'User-agent': useragent.get_useragent()}
-        response = requests.get(f"https://html.duckduckgo.com/html/?q={query}",headers=user_agent)
+        response = requests.get(f"https://html.duckduckgo.com/html/?q={query}",headers=user_agent,timeout=10)
         urls = re.findall(r'<a class="result__url" href="(.+?)">', response.text)
         for i in range(len(urls)):
             if urls[i].startswith('//duckduckgo.com/l/?uddg='):
@@ -17,9 +18,11 @@ def search_duckduckgo(query):
         results += urls
     except:
         pass
-def search_ask(query):
+    visual.update(1)
+
+def search_ask(query,visual):
     global results
-    search_duckduckgo(query)
+    search_duckduckgo(query,visual)
     for i in range(1,20):
         try:
             user_agent = {'User-agent': useragent.get_useragent()}
@@ -28,16 +31,18 @@ def search_ask(query):
             results += urls
         except:
             pass
+        visual.update(1)
 
 def SearchMain(dork,thread):
     threads = []
+    ttl = len(dork)
+    visual = tqdm(total=ttl*20,desc=f' Scanning Dorks')
     lines = open(dork, "r").read().splitlines()
     i = 0
     while(i < len(lines)):
         for j in range(i,min(i+thread,len(lines))):
             try:
-                colorprint.colorprint(f"{lines[j]}")
-                t = threading.Thread(target=search_ask,args=(lines[j],))
+                t = threading.Thread(target=search_ask,args=(lines[j],visual))
                 threads.append(t)
                 t.start()
             except:
