@@ -20,16 +20,16 @@ def search_ask(query,visual):
         
 def search_searchencrypt(query,visual):
     global results
-    try:
-        for j in range(1,20):
+    for j in range(1,20):
+        try:
             user_agent = {'User-agent': useragent.get_useragent()}
             response = requests.get(f"https://spapi.searchencrypt.com/api/search?q={query}&types=web&page={j}&limit=20",headers=user_agent)
             res = response.json()["Results"]
             for i in range(len(res)):
                 results.append(res[i]["ClickUrl"])
-    except:
-        pass
-    visual.update(1)
+        except:
+            pass
+        visual.update(1)
 def search_neeva(query,visual):
     global results
     for i in range(1,20):
